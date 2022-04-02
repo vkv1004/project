@@ -1,9 +1,8 @@
-from PyQt5 import Qt
-
 import sys
 import os
 import random
 
+from PyQt5 import Qt
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPainter, QColor, QPixmap, QFont
 from PyQt5 import QtCore
@@ -52,12 +51,21 @@ class Example(QWidget):
         self.btn1.setMaximumSize(140000, 140000)
         u.addWidget(self.btn1, 3, 0, 1, 2)
 
+        self.btn2 = QPushButton('Отправить', self)
+        self.btn2.clicked.connect(self.otp)
+        self.btn2.setFont(QFont("Times", 16))
+        self.btn2.setStyleSheet(
+            "background-color: {}".format('#00c8ff'))
+        self.btn2.setMaximumSize(140000, 140000)
+        u.addWidget(self.btn2, 4, 0, 1, 2)
+
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         cur.execute("SELECT * FROM files;")
         all_results = cur.fetchall()
         for i in all_results:
             s = i[0]
+            # Нельзя добавлять файлы с пробелами
             #s007 = '.'.join((s.split('/')[-1]).split('.')[:-1]) + '.' + s.split('.')[-1]
             self.combo.addItems([s])
         
@@ -98,6 +106,11 @@ class Example(QWidget):
                 c = i
                 break
         self.combo.takeItem(c)
+
+    def otp(self):
+        print(0)
+        #Я не знаю что писать
+        
         
 
 if __name__ == "__main__":
